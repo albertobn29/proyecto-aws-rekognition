@@ -1,0 +1,6 @@
+FLASK_ENV = development
+ACCESS_KEY_ID = *Clave llave de ID de aws*
+SECRET_ACCESS_KEY = *Clave secreta de aws*
+BUCKET_DEST = *Nombre del bucket destino de aws*
+BUCKET_SOURCE = *Nombre del bucket origen de aws*
+REGION = eu-west-2
