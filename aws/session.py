@@ -20,4 +20,6 @@ class Aws:
         if type(self).__inited:
             return
         type(self).__inited = True
-        self.session = boto3.Session(aws_access_key_id=accessKeyId, aws_secret_access_key=secretKey)
+        self.session = boto3.Session(aws_access_key_id=accessKeyId,
+                                     aws_secret_access_key=secretKey,
+                                     region_name='eu-west-2')

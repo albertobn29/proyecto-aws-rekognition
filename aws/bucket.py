@@ -1,4 +1,4 @@
-import session
+import aws.session as session
 
 
 class bcolors:
@@ -25,28 +25,28 @@ def listBuckets():
         print(f'\t{bucket.name}')
 
 
-def verElementBucket(name: str):
+def verElementBucket(bucket_name: str):
     cont = 0
-    print(f'\n{bcolors.HEADER}Elementos del bucket {name}:{bcolors.ENDC}')
-    bucket = s3.Bucket(name)
+    print(f'\n{bcolors.HEADER}Elementos del bucket {bucket_name}:{bcolors.ENDC}')
+    bucket = s3.Bucket(bucket_name)
     for obj in bucket.objects.all():
         cont += 1
         print(f'\t{obj.key}')
-    print(f'\tHay un total de {bcolors.OKCYAN}{cont}{bcolors.ENDC} archivos dentro de {name}')
+    print(f'\tHay un total de {bcolors.OKCYAN}{cont}{bcolors.ENDC} archivos dentro de {bucket_name}')
 
 
-def crearBucket(name: str):
-    if name not in buckets_name:
-        print(f'\n{bcolors.HEADER}Crear Bucket {name}{bcolors.ENDC}')
-        bucket = s3.Bucket(name)
+def crearBucket(bucket_name: str):
+    if bucket_name not in buckets_name:
+        print(f'\n{bcolors.HEADER}Crear Bucket {bucket_name}{bcolors.ENDC}')
+        bucket = s3.Bucket(bucket_name)
         bucket.create()
     else:
         raise Exception(f'{bcolors.FAIL}El bucket ya existe, pruebe otro nombre{bcolors.ENDC}')
 
 
-def eliminarBucket(name: str):
-    print(f'\n{bcolors.HEADER}Bucket {name} BORRADO{bcolors.ENDC}')
-    bucket = s3.Bucket(name)
+def eliminarBucket(bucket_name: str):
+    print(f'\n{bcolors.HEADER}Bucket {bucket_name} BORRADO{bcolors.ENDC}')
+    bucket = s3.Bucket(bucket_name)
     bucket.objects.delete()
     bucket.delete()
 
