@@ -14,3 +14,16 @@ def main(img_name):
     s3.verElementBucket(origen)
     detect.detect_faces(img_name)
 
+
+def checkBuckets():
+    try:
+        s3.crearBucket(os.environ.get('BUCKET_SOURCE'))
+    except Exception as err:
+        print(err)
+        pass
+
+    try:
+        s3.crearBucket(os.environ.get('BUCKET_DEST'))
+    except Exception as err:
+        print(err)
+        pass

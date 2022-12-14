@@ -18,11 +18,11 @@ buckets_name = []
 
 
 def listBuckets():
-    print(f'\n{bcolors.HEADER}Lista:{bcolors.ENDC}')
+    # print(f'\n{bcolors.HEADER}Lista:{bcolors.ENDC}')
     buckets = s3.buckets.all()
     for bucket in buckets:
         buckets_name.append(bucket.name)
-        print(f'\t{bucket.name}')
+        # print(f'\t{bucket.name}')
 
 
 def verElementBucket(bucket_name: str):
@@ -36,12 +36,13 @@ def verElementBucket(bucket_name: str):
 
 
 def crearBucket(bucket_name: str):
+    listBuckets()
     if bucket_name not in buckets_name:
         print(f'\n{bcolors.HEADER}Crear Bucket {bucket_name}{bcolors.ENDC}')
         bucket = s3.Bucket(bucket_name)
         bucket.create()
     else:
-        raise Exception(f'{bcolors.FAIL}El bucket ya existe, pruebe otro nombre{bcolors.ENDC}')
+        raise Exception(f'{bcolors.FAIL}El bucket ya existe{bcolors.ENDC}')
 
 
 def eliminarBucket(bucket_name: str):

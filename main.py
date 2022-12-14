@@ -1,12 +1,13 @@
-# from flask import Flask, request, abort, Response, render_template, url_for
 import os
 from flask import Flask, flash, request, redirect, render_template
 from werkzeug.utils import secure_filename
 import time
 import aws.functionality as funcs
+from dotenv import load_dotenv
+load_dotenv()
 
 UPLOAD_FOLDER = './static/img/'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__, static_folder='static')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -21,17 +22,18 @@ def allowed_file(filename):
 def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
+            return render_template('index.html', err='No archivo')
         file = request.files['file']
         if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
+            return render_template('index.html', err='Archivo incorrecto')
         if file and allowed_file(file.filename):
+            funcs.checkBuckets()
             filename = str(time.time())+'_'+secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             funcs.main(filename)
             return render_template('index.html', img='img/'+filename)
+        else:
+            return render_template('index.html', err='Extension de la imagen incorrecta')
     return render_template('index.html')
 
 
