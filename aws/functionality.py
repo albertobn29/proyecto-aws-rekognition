@@ -19,7 +19,7 @@ def main(img_name):
         img_indv_name = img.split('/')[1]
         s3.subirFileToBucket(destino, carpeta_imgs+img, img_indv_name)
         celeb_info = celeb.celebrity(img_indv_name)
-        info = {'img': img_indv_name, 'celeb_name': celeb_info['Name']}
+        info = {'img': img_indv_name, 'name': celeb_info['Name']}
         celebs_info.append(info)
 
     data = {'img_principal': img_name,
