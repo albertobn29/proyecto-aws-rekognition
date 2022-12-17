@@ -19,6 +19,4 @@ def celebrity(img_name):
         }
     )
     # print(response)
-    if len(response['CelebrityFaces']) < 0:
-        response['CelebrityFaces']['Name'] = 'ninguno'
-    return response['CelebrityFaces'][0]
+    return response['CelebrityFaces']

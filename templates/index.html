@@ -3,14 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <title>AMAZON Rekognition</title>
-        <!-- CSS only -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<!--	    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">-->
     </head>
     <body>
         <div class="m-5">
             <div class="d-flex justify-content-center">
-                <h1>A que famoso te pareces?</h1>
+                <h1>Reconocimiento de famosos</h1>
             </div>
             <div class="row mt-2 mx-4 mb-3 d-flex justify-content-center">
                 <div id="error" class="col-12 d-flex justify-content-center"></div>
@@ -42,14 +40,31 @@
             alert('{{err}}', 'danger')
         </script>
         {% endif %}
-        {% if data %}
-            <img style="height: 250px; width: 141;" src="{{url_for('static', filename='img/'+data.img_principal)}}" class="img-thumbnail" alt="imagen principal">
-            {% for celeb in data.celebs_info %}
-                <img style="height: 250px; width: 141;" src="{{url_for('static', filename='img/'+data.carpeta_imgs+'/'+celeb.img)}}" class="img-thumbnail" alt="celeb.name">
-                <p>{{celeb.name}}</p>
-            {% endfor %}
-        {% endif %}
 
+        {% if data %}
+            <div class="m-5 d-flex justify-content-center">
+                <div class="row">
+                    <div class="col align-self-center">
+                        <img style="height: 250px; width: 141;" src="{{url_for('static', filename='img/'+data.img_principal)}}" class="img-thumbnail" alt="imagen principal">
+                    </div>
+                    <div class="col">
+                        {% for celeb in data.celebs_info %}
+                            <div class="card m-2">
+                                <div class="card-header">
+                                    {{celeb.name}}
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{url_for('static', filename='img/'+data.carpeta_imgs+'/'+celeb.img)}}" class="w-50 h-50 d-flex justify-content-center card-img-top" alt="{{celeb.name}}">
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% if data.celebs_info|length == 0 %}
+                            <p>No se han encontrado semejanzas con famosos</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     </body>
 </html>

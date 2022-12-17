@@ -1,5 +1,5 @@
 import os
-from flask import Flask, flash, request, redirect, render_template
+from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
 import time
 import aws.functionality as funcs
@@ -22,7 +22,7 @@ def allowed_file(filename):
 def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:
-            return render_template('index.html', err='No archivo')
+            return render_template('index.html', err='No hay archivo')
         file = request.files['file']
         if file.filename == '':
             return render_template('index.html', err='Archivo incorrecto')
@@ -35,6 +35,11 @@ def upload_file():
         else:
             return render_template('index.html', err='Extension de la imagen incorrecta')
     return render_template('index.html')
+
+
+@app.errorhandler(404)
+def page_not_found():
+    return render_template('404.html'), 404
 
 
 # Run the app
