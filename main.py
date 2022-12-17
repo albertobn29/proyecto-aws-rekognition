@@ -30,8 +30,8 @@ def upload_file():
             funcs.checkBuckets()
             filename = str(time.time())+'_'+secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            funcs.main(filename)
-            return render_template('index.html', img='img/'+filename)
+            data = funcs.main(filename)
+            return render_template('index.html', data=data)
         else:
             return render_template('index.html', err='Extension de la imagen incorrecta')
     return render_template('index.html')
